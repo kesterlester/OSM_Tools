@@ -17,9 +17,7 @@
 
 
 exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
-    tee 1 | \
 	grep 'GPS Position' | \
-    tee 2 | \
 	awk '{print "https://www.openstreetmap.org/edit#map=19/" $5 $4 "/" $7 $6}' `# print what OSM wants except there is a stupid comma and NSEW instead of signs` | \
 	sed 's/,//g' `# Get rid of a comma` | \
 	tr 'NOWOSOE' '+ - - +' `# Turn the letters NSWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.`
