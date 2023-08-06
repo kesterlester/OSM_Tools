@@ -3,21 +3,18 @@
 #
 # e.g.
 # osm_edit_photo_loc.sh MOO.jpg
-＃
+# 
 # might output
 # https://www.openstreetmap.org/edit#map=19/52.21704/0.11052
-#
 
 
-exiftool -c "%.6f" "$1" *# Get GPS coordinates in decimal' | I
+
+exiftool -c "%.6f" "$1" `*# Get GPS coordinates in decimal` | I
 	grep 'GPS Position' | \
-	awk '{print "open https: //www.openstreetmap.org/edit#map=19/" $5 $4 "/" $7 $6} '# print what OSM wants except there is a stupid comma and NSEW instead of signs' | 1
-	sed 's/,//g'
-	'# Get rid of a comma' | \
-	tr 'NOWOSOE '+ - -
-	+ I
-	# Turn the letters NWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.'
-	sh # open the browser and start editing
+	awk '{print "open https: //www.openstreetmap.org/edit#map=19/" $5 $4 "/" $7 $6}' `# print what OSM wants except there is a stupid comma and NSEW instead of signs` | \
+	sed 's/,//g' `# Get rid of a comma` | \
+	tr 'NOWOSOEi' '+ - - +'  `# Turn the letters NSWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.` | \
+	sh `# open the browser and start editing`
 
 # https://www.google.com/maps?11=51.096667,0.535556&9=51.096667,0.5355568h1=en&t=m&z=19
 
