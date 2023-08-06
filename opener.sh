@@ -26,7 +26,7 @@ exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
 
 exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
 	grep 'GPS Position' | \
-	awk '{print "\"https://www.google.com/maps?ll=" $5 $4 "COMMA" $7 $6 "&hl=en&t=m&z=19\""}' `# print wh at GOOGLE wants except there is a stupid comma and NSEW instead of signs` | \
+	awk '{print "\"https://www.google.com/maps?ll=" $5 $4 "COMMA" $7 $6 "&hl=en&t=m&z=19\""}' `# print what GOOGLE wants except there is a stupid comma and NSEW instead of signs` | \
 	sed 's/,//g' `# Get rid of a comma we don't need` | \
 	sed 's/COMMA/,/g' `# Put in the comma we need` | \
 	tr 'NOWOSOE' '+ - - +' `# Turn the letters NSWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.`
