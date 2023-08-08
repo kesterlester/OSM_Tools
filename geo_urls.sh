@@ -1,5 +1,6 @@
 #!/bin/bash
-# Run with one of more arguments, each being the name of an image file containing EXIF data. Result, URLs that you can use to edit that location in OSM, etc.
+# Run with one of more arguments, each being the name of an image file containing EXIF data.
+# Output is list of URLs that you can use to edit/view each location in OSM, etc.
 #
 # e.g.
 #
