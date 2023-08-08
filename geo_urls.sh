@@ -14,7 +14,8 @@
 #
 # open `./geo_urls.sh TEST_IMAGES/IMG_6773.jpeg`
 
-IMAGE=$1
+for IMAGE in "$@"
+do {
 
 read -r GPS_LAT GPS_LON < <(  
   exiftool -c "%.6f" "$IMAGE" `# Get GPS coordinates in decimal` | \
@@ -31,3 +32,5 @@ GEO_URL_GOOGLE_MAPS="https://www.google.com/maps?ll=$GPS_LAT,$GPS_LON"'&hl=en&t=
 
 echo $GEO_URL_OSM
 echo $GEO_URL_GOOGLE_MAPS
+
+} done
