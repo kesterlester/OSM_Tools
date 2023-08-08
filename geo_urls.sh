@@ -16,7 +16,7 @@
 # open `./geo_urls.sh TEST_IMAGES/IMG_6773.jpeg`
 # 
 # or like this:
-
+#
 # ./geo_urls.sh TEST_IMAGES/* | xargs open
 
 for IMAGE in "$@"
