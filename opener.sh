@@ -19,7 +19,7 @@
 read -r GPS_LAT GPS_LON < <(  exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
     grep 'GPS Position' | \
     sed 's/.*://g' `# Get rid of the "GPS Position : " text` | \
-    tr 'NOWOSOE,' '+ - - + ' `# Turn the letters NSWE to +--+ and remove a comma we don't want.  The Os are to stop +--+ being interpreted as some kind of control character.` | \
+    tr 'NOWOSOE,' '+ - - + ' `# Turn the letters NSWE to +--+ and remove a comma we don't want.  The Os are to stop +--+ being interpreted as some kind of control sequence.` | \
     awk '{print $2 $1 " " $4 $3}' `# put signs in correct places so as to output LATITUDE followed by LONGITUDE` 
 )
 
