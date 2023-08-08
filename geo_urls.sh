@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run with a single argument, the name of an image file containing EXIF data. Result, URLs that you can use to edit that location in OSM.
+# Run with one of more arguments, each being the name of an image file containing EXIF data. Result, URLs that you can use to edit that location in OSM, etc.
 #
 # e.g.
 #
@@ -13,10 +13,15 @@
 # so you might use it like this:
 #
 # open `./geo_urls.sh TEST_IMAGES/IMG_6773.jpeg`
+# 
+# or like this:
+
+# ./geo_urls.sh TEST_IMAGES/* | xargs open
 
 for IMAGE in "$@"
 do {
 
+# Fill variables GPS_LAT and GPS_LON with data from the image file:
 read -r GPS_LAT GPS_LON < <(  
   exiftool -c "%.6f" "$IMAGE" `# Get GPS coordinates in decimal` | \
     grep 'GPS Position' | \
@@ -25,7 +30,7 @@ read -r GPS_LAT GPS_LON < <(
     awk '{print $2 $1 " " $4 $3}' `# put signs in correct places so as to output LATITUDE followed by LONGITUDE` 
 )
  
-#echo Latitude and Longitude from $IMAGE are $GPS_LAT MOO $GPS_LON
+#echo Latitude and Longitude from $IMAGE are $GPS_LAT and $GPS_LON respetively.
   
 GEO_URL_OSM="https://www.openstreetmap.org/edit#map=19/$GPS_LAT/$GPS_LON"
 GEO_URL_GOOGLE_MAPS="https://www.google.com/maps?ll=$GPS_LAT,$GPS_LON"'&hl=en&t=m&z=19'
