@@ -8,7 +8,7 @@
 # might result in 
 #
 # https://www.openstreetmap.org/edit#map=19/+54.673428/-2.724244
-# "https://www.google.com/maps?ll=+54.673428,-2.724244&hl=en&t=m&z=19"
+# https://www.google.com/maps?ll=+54.673428,-2.724244&hl=en&t=m&z=19
 #
 # so you might use it like this:
 #
@@ -16,17 +16,16 @@
 #
 
 
-exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
-	grep 'GPS Position' | \
-	tr 'NOWOSOE' '+ - - +' `# Turn the letters NSWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.` | \
-	awk '{print "https://www.openstreetmap.org/edit#map=19/" $5 $4 "/" $7 $6}' `# print what OSM wants except there is a stupid comma` | \
-	sed 's/,//g' `# Get rid of a comma` 
+GPS_COORDS=$(
+  exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
+    grep 'GPS Position' | \
+    sed 's/.*://g' `# Get rid of the "GPS Position : " text` | \
+    tr 'NOWOSOE,' '+ - - + ' `# Turn the letters NSWE to +--+ and remove a comma we don't want.  The Os are to stop +--+ being interpreted as some kind of control character.` | \
+    awk '{print $2 $1 " " $4 $3}' `# put signs in correct places`
+)
 
-# https://www.google.com/maps?11=51.096667,0.535556&9=51.096667,0.5355568h1=en&t=m&z=19
+echo $GPS_COORDS | \
+  awk '{print "https://www.openstreetmap.org/edit#map=19/" $1 "/" $2 }' `# print what OSM wants`
 
-exiftool -c "%.6f" "$1" `# Get GPS coordinates in decimal` | \
-	grep 'GPS Position' | \
-	tr 'NOWOSOE' '+ - - +' `# Turn the letters NSWE to +--+ The Os are to stop +--+ being interpreted as some kind of control character.` | \
-	awk '{print "\"https://www.google.com/maps?ll=" $5 $4 "COMMA" $7 $6 "&hl=en&t=m&z=19\""}' `# print what GOOGLE wants except there is a stupid comma` | \
-	sed 's/,//g' `# Get rid of a comma we don't need` | \
-	sed 's/COMMA/,/g' `# Put in the comma we need` 
+echo $GPS_COORDS | \
+	awk '{print "https://www.google.com/maps?ll=" $1 "," $2 "&hl=en&t=m&z=19"}' `# print what GOOGLE wants` 
