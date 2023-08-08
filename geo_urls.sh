@@ -3,7 +3,7 @@
 #
 # e.g.
 #
-# ./opener.sh TEST_IMAGES/IMG_6773.jpeg 
+# ./geo_urls.sh TEST_IMAGES/IMG_6773.jpeg 
 #
 # might result in 
 #
@@ -26,11 +26,10 @@ read -r GPS_LAT GPS_LON < <(
 
 #echo Latitude and Longitude from $IMAGE are $GPS_LAT MOO $GPS_LON
 
-URLS_FOR_IMAGE=$(
-   echo "https://www.openstreetmap.org/edit#map=19/$GPS_LAT/$GPS_LON"
-   echo "https://www.google.com/maps?ll=$GPS_LAT,$GPS_LON"'&hl=en&t=m&z=19'
-)
+GEO_URL_OSM="https://www.openstreetmap.org/edit#map=19/$GPS_LAT/$GPS_LON"
+GEO_URL_GOOGLE_MAPS="https://www.google.com/maps?ll=$GPS_LAT,$GPS_LON"'&hl=en&t=m&z=19'
 
-echo $URLS_FOR_IMAGE
+echo $GEO_URL_OSM
+echo $GEO_URL_GOOGLE_MAPS
 
 
