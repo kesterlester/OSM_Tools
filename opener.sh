@@ -28,4 +28,4 @@ echo $GPS_COORDS | \
   awk '{print "https://www.openstreetmap.org/edit#map=19/" $1 "/" $2 }' `# print what OSM wants`
 
 echo $GPS_COORDS | \
-	awk '{print "https://www.google.com/maps?ll=" $1 "," $2 "&hl=en&t=m&z=19"}' `# print what GOOGLE wants` 
+  awk '{print "https://www.google.com/maps?ll=" $1 "," $2 "&hl=en&t=m&z=19"}' `# print what GOOGLE wants` 
