@@ -24,7 +24,7 @@ read -r GPS_LAT GPS_LON < <(
     awk '{print $2 $1 " " $4 $3}' `# put signs in correct places so as to output LATITUDE followed by LONGITUDE` 
 )
  
-echo Latitude and Longitude from $IMAGE are $GPS_LAT MOO $GPS_LON
+#echo Latitude and Longitude from $IMAGE are $GPS_LAT MOO $GPS_LON
   
 GEO_URL_OSM="https://www.openstreetmap.org/edit#map=19/$GPS_LAT/$GPS_LON"
 GEO_URL_GOOGLE_MAPS="https://www.google.com/maps?ll=$GPS_LAT,$GPS_LON"'&hl=en&t=m&z=19'
